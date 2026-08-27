@@ -5,15 +5,18 @@ function App() {
   const [formData, setFormData] = useState({ studentId: '', name: '', email: '' });
   const [editingId, setEditingId] = useState(null);
 
-  const backendUrl = window.location.origin.replace('-5173', '-5000');
-  const API_URL = `${backendUrl}/api/students`;
+  // Dùng trực tiếp IP loopback 127.0.0.1 để tránh lỗi phân giải tên miền localhost
+  const API_URL = 'http://localhost:5000/api/students';
 
   const fetchStudents = async () => {
     try {
       const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       const data = await res.json();
       setStudents(data);
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+      console.error('Lỗi fetch danh sách:', err); 
+    }
   };
 
   useEffect(() => { fetchStudents(); }, []);
@@ -25,15 +28,18 @@ function App() {
     const method = editingId ? 'PUT' : 'POST';
     const url = editingId ? `${API_URL}/${editingId}` : API_URL;
 
-    await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-
-    setFormData({ studentId: '', name: '', email: '' });
-    setEditingId(null);
-    fetchStudents();
+    try {
+      await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      setFormData({ studentId: '', name: '', email: '' });
+      setEditingId(null);
+      fetchStudents();
+    } catch (err) {
+      console.error('Lỗi khi lưu dữ liệu:', err);
+    }
   };
 
   const handleEdit = (st) => {
@@ -43,8 +49,12 @@ function App() {
 
   const handleDelete = async (id) => {
     if (confirm('Bạn có chắc muốn xóa sinh viên này?')) {
-      await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-      fetchStudents();
+      try {
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchStudents();
+      } catch (err) {
+        console.error('Lỗi khi xóa:', err);
+      }
     }
   };
 

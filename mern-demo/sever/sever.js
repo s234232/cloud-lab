@@ -14,6 +14,11 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Kết nối MongoDB Atlas thành công!'))
   .catch((err) => console.error('Lỗi kết nối MongoDB:', err));
 
+// API GET: Hello (Bổ sung cho Câu 45)
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from Docker Backend!' });
+});
+
 // API POST: Thêm sinh viên mới
 app.post('/api/students', async (req, res) => {
   try {

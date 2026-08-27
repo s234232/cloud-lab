@@ -24,4 +24,5 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Student', studentSchema);
+// Thêm 'students' làm tham số thứ 3 để chỉ định chính xác tên collection trên MongoDB Atlas
+module.exports = mongoose.model('Student', studentSchema, 'students');
