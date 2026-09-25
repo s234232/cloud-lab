@@ -60,7 +60,7 @@ function App() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Quản Lý Sinh Viên</h1>
+      <h1>Quản Lý Sinh Viên Nguyễn Quốc Sỹ</h1>
       <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
         <input type="text" name="studentId" placeholder="Mã SV" value={formData.studentId} onChange={handleChange} required />
         <input type="text" name="name" placeholder="Họ Tên" value={formData.name} onChange={handleChange} required />
