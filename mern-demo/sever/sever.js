@@ -66,7 +66,16 @@ app.delete('/api/students/:id', async (req, res) => {
   }
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'UP',
+    timestamp: new Date(),
+    uptime: process.uptime()
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+  console.log(`Server đang chạy tại http://localhost:${PORT} - Backend 1.2 Testing Auto Deploy`);
 });
+
