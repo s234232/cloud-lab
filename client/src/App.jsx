@@ -6,7 +6,7 @@ function App() {
   const [editingId, setEditingId] = useState(null);
 
   // Dùng trực tiếp IP loopback 127.0.0.1 để tránh lỗi phân giải tên miền localhost
-  const API_URL = 'http://localhost:5000/api/students';
+  const API_URL = '/api/students';
 
   const fetchStudents = async () => {
     try {
